@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en" x-frame-options="sameorigin">
+<head>
+<meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+<meta http-equiv="PRAGMA" content="NO-CACHE">
+<meta http-equiv="Expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+<meta http-equiv="imagetoolbar" content="no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="canonical" href="https://blog.lalacube.com/mei/webComponent_msc-collages.html">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="People love collages. With collages we could combined several images together and make them more vivid and interesting. Developers could apply <msc-collages /> instead of annoying HTML code & CSS setting. All we need to do is just make a few setting and everything will be all set. That's take a look what can <msc-collages /> do ? Here comes some <msc-collages /> with different theme." />
+<meta name="robots" content="max-snippet:50,max-video-preview:30,max-image-preview:large">
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Web Component: &lt;msc-collages /&gt; - web components based images effect">
+<meta property="og:site_name" content="mei's studio">
+<meta property="og:description" content="People love collages. With collages we could combined several images together and make them more vivid and interesting. Developers could apply <msc-collages /> instead of annoying HTML code & CSS setting. All we need to do is just make a few setting and everything will be all set. That's take a look what can <msc-collages /> do ? Here comes some <msc-collages /> with different theme.">
+<meta property="og:url" content="https://blog.lalacube.com/mei/webComponent_msc-collages.html">
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://blog.lalacube.com/mei/img/preview/msc-collages.png">
+<meta property="og:image:secure_url" content="https://blog.lalacube.com/mei/img/preview/msc-collages.png">
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Web Component: &lt;msc-collages /&gt; - web components based images effect">
+<title>Web Component: &lt;msc-collages /&gt; - web components based images effect</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Roboto+Mono:400,500|Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="css/wc-base.css">
+<script async name="msc-ripple-anchor" src="script/pack-loader.js" data-required="script/class-msc-ripple-anchor.js,script/wcl.js"></script>
+<script async name="msc-sidebar" src="script/pack-loader.js" data-required="script/class-msc-sidebar.js,script/wcl.js"></script>
+<script async name="msc-ga" src="script/pack-loader.js" data-required="script/class-msc-ga.js,script/wcl.js,https://www.google-analytics.com/analytics.js"></script>
+<script type="module" src="mjs/wc-msc-collages.js"></script>
+<script async src="script/wc-init.js"></script>
+<style>
+msc-collages:not(:defined){visibility:hidden;}
+
+.carousel-shell{width:100%;-webkit-overflow-scrolling:touch;overflow:hidden;overflow-x:scroll;scroll-behavior:smooth;}
+.carousel-shell__queue{display:flex;justify-content:flex-start;}
+.carousel-shell__queue>*{flex-grow:0;flex-shrink:0;}
+.carousel-shell__queue::before{flex:0 0 var(--spl);width:var(--spl);content:'';display:block;}
+.carousel-shell__queue::after{flex:0 0 var(--spl);width:var(--spl);content:'';display:block;}
+
+.carousel-shell__collages{--spl:var(--main-padding);}
+.carousel-shell__collages{inline-size:calc(100% + var(--main-padding) * 2);margin-inline-start:calc(var(--main-padding) * -1);}
+.carousel-shell__collages msc-collages{inline-size:300px;}
+.carousel-shell__collages msc-collages:nth-of-type(n+2){margin-inline-start:.75em;}
+
+.hero{height:auto;max-width:600px;background:#dce2f0;border-radius:.5em;padding:1em;box-sizing:border-box;}
+.collage-trigger{font-size:1.125em;color:#b60845;width:100%;height:2.77em;line-height:2.55;box-sizing:border-box;border:2px solid #b60845;border-radius:2.77em;text-align:center;text-transform:uppercase;transition:color 250ms ease,border-color 250ms ease;will-change:color,border-color;cursor:pointer;letter-spacing:.2em;display:block;user-select:none;text-decoration:none;margin-top:1em;}
+.collage-trigger:hover{font-weight:400;color:#db004d;border-color:#db004d;}
+.collage-trigger{--ripple-color:rgba(182,8,69,.2);--duration:1.2s;}
+
+.collage-trigger:nth-of-type(1){color:#4a8af1;border-color:#4a8af1;--ripple-color:rgba(74,138,241,.2);}
+.collage-trigger:nth-of-type(1):hover{color:#1b71fa;border-color:#1b71fa;}
+
+.collage-trigger:nth-of-type(2){color:#b60845;border-color:#b60845;--ripple-color:rgba(112,58,217,.2);}
+.collage-trigger:nth-of-type(2):hover{color:#db004d;border-color:#db004d;}
+
+.collage-trigger+.collage-trigger{margin-top:2em;}
+</style>
+</head>
+
+<body>
+<header id="hd" role="banner">
+    <div class="header__ens">
+        <a href="#menu" class="header__menu" data-vars-event-label="menu"></a>
+        <p class="header__title">MEI'S STUDIO</p>
+        <a href="#share" class="header__share" data-vars-event-label="web-share"></a>
+    </div>
+    <msc-sidebar side="left">
+        <nav>
+            <p class="nav__brand__title">mei's studio</p>
+            <div class="nav__section">
+                <p class="nav__section__p">Material Design</p>
+                <ul class="nav__section__ul">
+                    <li>
+                        <a href="webComponent_mdc-text-field.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="mdc-text-field">Text Field</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_mdc-select.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="mdc-select">Select</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_mdc-checkbox.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="mdc-checkbox">Checkbox</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_mdc-radio.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="mdc-radio">Radio</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_mdc-slider.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="mdc-slider">Slider</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav__section">
+                <p class="nav__section__p">Layout</p>
+                <ul class="nav__section__ul">
+                    <li>
+                        <a href="webComponent_msc-bounce-card.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="msc-bounce-card">Bounce Card</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_msc-sidebar.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="msc-sidebar">Sidebar</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_msc-venom.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="msc-venom">Venom</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_msc-spotlight.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="msc-spotlight">Spotlight</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_msc-phantom.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="msc-phantom">Phantom</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_msc-ez-video.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="msc-ez-video">EZ Video</a>
+                    </li>
+                    <li>
+                        <a href="webComponent_msc-ripple-anchor.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="msc-ripple-anchor">Ripple Anchor</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav__section">
+                <p class="nav__section__p">Instrumentation</p>
+                <ul class="nav__section__ul">
+                    <li>
+                        <a href="webComponent_msc-ga.html" class="nav__section__a" is="msc-ripple-anchor" data-vars-event-label="msc-ga">Google Analytics</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </msc-sidebar>
+</header>
+
+<main id="bd" role="main">
+    <h1>Collages</h1>
+    <section>
+        <p class="intro">
+          People love collages. With collages we could combined several images together and make them more vivid and interesting.
+          Developers could apply <code>&lt;msc-collages /&gt;</code> instead of annoying HTML code & CSS setting.
+          All we need to do is just make a few setting and everything will be all set.
+          That's take a look what can <code>&lt;msc-collages /&gt;</code> do ? <br /><br />
+          Here comes some <code>&lt;msc-collages /&gt;</code> with different theme.
+        </p>
+
+        <div class="carousel-shell carousel-shell__collages">
+          <div class="carousel-shell__queue">
+            <msc-collages>
+              <script type="application/json">
+                {
+                  "theme": 1,
+                  "object-fit": "cover",
+                  "collages": [
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=1",
+                      "alt": "grayscale 1",
+                      "target": "_blank"
+                    }
+                  ]
+                }
+              </script>
+            </msc-collages>
+
+            <msc-collages>
+              <script type="application/json">
+                {
+                  "theme": 2,
+                  "object-fit": "cover",
+                  "collages": [
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=2",
+                      "alt": "grayscale 1",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=3",
+                      "alt": "grayscale 2",
+                      "target": "_blank"
+                    }
+                  ]
+                }
+              </script>
+            </msc-collages>
+
+            <msc-collages>
+              <script type="application/json">
+                {
+                  "theme": 3,
+                  "object-fit": "cover",
+                  "collages": [
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=4",
+                      "alt": "grayscale 1",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=5",
+                      "alt": "grayscale 2",
+                      "target": "_blank"
+                    }
+                  ]
+                }
+              </script>
+            </msc-collages>
+
+            <msc-collages>
+              <script type="application/json">
+                {
+                  "theme": 4,
+                  "object-fit": "cover",
+                  "collages": [
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=6",
+                      "alt": "grayscale 1",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=7",
+                      "alt": "grayscale 2",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=8",
+                      "alt": "grayscale 3",
+                      "target": "_blank"
+                    }
+                  ]
+                }
+              </script>
+            </msc-collages>
+
+            <msc-collages>
+              <script type="application/json">
+                {
+                  "theme": 5,
+                  "object-fit": "cover",
+                  "collages": [
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=9",
+                      "alt": "grayscale 1",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=10",
+                      "alt": "grayscale 2",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=11",
+                      "alt": "grayscale 3",
+                      "target": "_blank"
+                    }
+                  ]
+                }
+              </script>
+            </msc-collages>
+
+            <msc-collages>
+              <script type="application/json">
+                {
+                  "theme": 6,
+                  "object-fit": "cover",
+                  "collages": [
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=12",
+                      "alt": "grayscale 1",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=13",
+                      "alt": "grayscale 2",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=14",
+                      "alt": "grayscale 3",
+                      "target": "_blank"
+                    }
+                  ]
+                }
+              </script>
+            </msc-collages>
+
+            <msc-collages>
+              <script type="application/json">
+                {
+                  "theme": 7,
+                  "object-fit": "cover",
+                  "collages": [
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=15",
+                      "alt": "grayscale 1",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=16",
+                      "alt": "grayscale 2",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=17",
+                      "alt": "grayscale 3",
+                      "target": "_blank"
+                    }
+                  ]
+                }
+              </script>
+            </msc-collages>
+
+            <msc-collages>
+              <script type="application/json">
+                {
+                  "theme": 8,
+                  "object-fit": "cover",
+                  "collages": [
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=18",
+                      "alt": "grayscale 1",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=19",
+                      "alt": "grayscale 2",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=20",
+                      "alt": "grayscale 3",
+                      "target": "_blank"
+                    },
+                    {
+                      "link": "?",
+                      "src": "https://picsum.photos/300/300?grayscale&random=21",
+                      "alt": "grayscale 4",
+                      "target": "_blank"
+                    }
+                  ]
+                }
+              </script>
+            </msc-collages>
+          </div>
+        </div>
+
+        <h2>Basic Usage</h2>
+        <p class="intro"><code>&lt;msc-collages /&gt;</code> is a web component. All we need to do is put the required script into your HTML document. Then follow <code>&lt;msc-collages /&gt;</code>'s html structure and everything will be all set.</p>
+        <p class="subject">Required Script</p>
+        <pre class="code overscrolling-x">
+<span class="cm-tag">&lt;script</span> 
+  <span class="cm-attribute">type</span>="module"
+  <span class="cm-attribute">src</span>="https://your-domain/wc-msc-collages.js"
+<span class="cm-tag">&lt;/script&gt;</span></pre>
+
+        <p class="subject">Structure</p>
+        <p class="intro">
+          Put <code>&lt;msc-collages /&gt;</code> into HTML document. It will have different functions and looks with attribute mutation.
+        </p>
+
+        <pre class="code overscrolling-x">
+<span class="cm-tag">&lt;msc-collages&gt;</span>
+  <span class="cm-tag">&lt;script</span> <span class="cm-attribute">type</span>="application/json"<span class="cm-tag">&gt;</span>
+    {
+      "theme": 8, <span class="cm-comment">// 1 ~ 8</span>
+      "object-fit": "cover", <span class="cm-comment">// cover || contain</span>
+      "collages": [
+        {
+          "link": "?",
+          "src": "https://picsum.photos/300/300?grayscale&random=1",
+          "alt": "grayscale 1",
+          "target": "_blank"
+        },
+        {
+          "link": "?",
+          "src": "https://picsum.photos/300/300?grayscale&random=2",
+          "alt": "grayscale 2",
+          "target": "_blank"
+        },
+        {
+          "link": "?",
+          "src": "https://picsum.photos/300/300?grayscale&random=3",
+          "alt": "grayscale 3",
+          "target": "_blank"
+        },
+        {
+          "link": "?",
+          "src": "https://picsum.photos/300/300?grayscale&random=4",
+          "alt": "grayscale 4",
+          "target": "_blank"
+        }
+      ]
+    }
+  <span class="cm-tag">&lt;/script&gt;</span>
+<span class="cm-tag">&lt;/msc-collages&gt;</span></pre>
+
+        <p class="intro">
+          Otherwise, developers could also choose <code>remoteconfig</code> to fetch config for <code>&lt;msc-collages /&gt;</code>.
+        </p>
+
+        <pre class="code overscrolling-x">
+<span class="cm-tag">&lt;msc-collages</span>
+  <span class="cm-attribute">remoteconfig</span>="https://your-domain/api-path"
+  ...
+<span class="cm-tag">&gt;&lt;/msc-collages&gt;</span>
+</pre>
+
+    <h2>JavaScript Instantiation</h2>
+    <p class="intro"><code>&lt;msc-collages&gt;</code> could also use JavaScript to create DOM element. Here comes some examples.</p>
+    <pre class="code overscrolling-x">
+<span class="cm-tag">&lt;script type="module"&gt;</span>
+import { MscCollages } from 'https://your-domain/wc-msc-collages.js';
+
+<span class="cm-comment">//use DOM api</span>
+<span class="cm-keyword">const</span> nodeA = document.createElement('msc-collages');
+document.body.appendChild(nodeA);
+nodeA.<span class="cm-attribute">theme</span> = 1;
+nodeA.<span class="cm-attribute">collages</span> = [ {...} ];
+
+<span class="cm-comment">// new instance with Class</span>
+<span class="cm-keyword">const</span> nodeB = new MscCollages();
+document.body.appendChild(nodeB);
+nodeB.<span class="cm-attribute">theme</span> = 2;
+nodeB.<span class="cm-attribute">collages</span> = [ {...}, {...} ];
+
+<span class="cm-comment">// new instance with Class & default config</span>
+<span class="cm-keyword">const</span> config = {
+  theme: 3,
+  collages: [
+    {...},
+    {...},
+    ...
+  ]
+};
+<span class="cm-keyword">const</span> nodeC = new MscCollages(config);
+document.body.appendChild(nodeC);
+<span class="cm-tag">&lt;/script&gt;</span></pre>
+
+        <h2>Style Customization</h2>
+        <p class="intro"><code>&lt;msc-collages /&gt;</code> uses CSS variables to hook uploader trigger theme & drop zone. That means developer could easy change it into the looks you like.</p>
+        <pre class="code overscrolling-x">
+<span class="cm-tag">&lt;style&gt;</span>
+<span class="cm-attribute">msc-collages</span> {
+  <span class="cm-keyword">--msc-collages-gap</span>: 1px;
+  <span class="cm-keyword">--msc-collages-overlay</span>: #1d2228;
+  <span class="cm-keyword">--msc-collages-border-radius</span>: 8px;
+}
+<span class="cm-tag">&lt;/style&gt;</span></pre>
+
+        <h2>Attributes</h2>
+        <p class="intro"><code>&lt;msc-collages /&gt;</code> supports some attributes to let it become more convenience & useful.</p>
+
+        <p class="subject">theme</p>
+        <p class="intro">Set theme id for different usage. Developers could set <span class="highlight">1</span> ~ <span class="highlight">8</span> theme. Default is "<span class="highlight">1</span>".</p>
+        <pre class="code overscrolling-x">
+<span class="cm-tag">&lt;msc-collages</span>
+  <span class="cm-attribute">theme</span>="1"
+  ...
+<span class="cm-tag">&gt;&lt;/msc-collages&gt;</span>
+</pre>
+
+        <p class="subject">object-fit</p>
+        <p class="intro">Set image render property. This attribute only accept <span class="highlight">cover</span> or <span class="highlight">contain</span>. Default is "<span class="highlight">cover</span>".</p>
+        <pre class="code overscrolling-x">
+<span class="cm-tag">&lt;msc-collages</span>
+  <span class="cm-attribute">object-fit</span>="cover"
+  ...
+<span class="cm-tag">&gt;&lt;/msc-collages&gt;</span>
+</pre>
+
+        <p class="subject">collages</p>
+        <p class="intro">Set collages data. This should be JSON string and each element needs contains "<span class="highlight">link</span>"、"<span class="highlight">src</span>"、"<span class="highlight">alt</span>"、"<span class="highlight">target</span>" for rendering. Max count is 4.</p>
+        <pre class="code overscrolling-x">
+<span class="cm-tag">&lt;msc-collages</span>
+  <span class="cm-attribute">collages</span>='[{"link":"?","src":"https://picsum.photos/300/300?grayscale&random=1","alt":"grayscale 1","target":"_blank"}]'
+  ...
+<span class="cm-tag">&gt;&lt;/msc-collages&gt;</span>
+</pre>
+
+        <h2>Properties</h2>
+        <table class="properties">
+            <thead>
+                <tr>
+                    <th>Property Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <code>theme</code>
+                    </td>
+                    <td>
+                        String
+                    </td>
+                    <td>Getter / Setter for theme id.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>object-fit</code>
+                    </td>
+                    <td>
+                        String
+                    </td>
+                    <td>Getter / Setter for image render property. Only accept "<code>cover</code>" or "<code>contain</code>"</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>collages</code>
+                    </td>
+                    <td>
+                        Object
+                    </td>
+                    <td>Getter / Setter for collages data.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Event</h2>
+        <table class="properties">
+            <thead>
+                <tr>
+                    <th>Event Signature</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <code>msc-collages-click</code>
+                    </td>
+                    <td>Fired when <code>&lt;msc-collages /&gt;</code> clicked. Developers could get original click event from  <span class="highlight">event.detail.baseEvent</span> to do preventDefault behavior.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer id="ft">
+    <p class="ft__title">mei's studio</p>
+    <p class="ft__desc">
+        It's a playground which owned by mei the front end engineer who loved and enjoyed modern web technology.
+        Each of mei's work will be listed here. Please feel free to discuss if any problem occured.
+    </p>
+    <p class="ft__social">
+        <a class="ft__social__a" href="https://www.facebook.com/mei.studio.li" rel="noopener" target="_blank">Facebook</a>
+        <span class="ft__social__span">/</span>
+        <a class="ft__social__a" href="https://twitter.com/meistudio" rel="noopener" target="_blank">Twitter</a>
+    </p>
+    <small class="ft__small" role="contentinfo">Powered by mei's studio.</small>
+</footer>
+
+<msc-ga>
+    <script type="application/json">
+        {
+            "vars": {
+                "account": "UA-74300583-2",
+                "documentGroup": "msc-collages"
+            },
+            "extraTrackerData": {
+                "contentGroup1": "${documentGroup}"
+            },
+            "triggers": {
+                "defaultPageview": {
+                    "on": "visible",
+                    "request": "pageview"
+                },
+                "headerClicks": {
+                    "on": "click",
+                    "request": "event",
+                    "selector": "#hd a",
+                    "vars": {
+                        "eventCategory": "${documentGroup}",
+                        "eventAction": "header",
+                        "eventLabel": "none"
+                    }
+                },
+                "ftModuleview": {
+                    "on": "visible",
+                    "request": "event",
+                    "selector": "#ft",
+                    "vars": {
+                        "eventCategory": "${documentGroup}",
+                        "eventAction": "moduleview",
+                        "eventLabel": "ft"
+                    },
+                    "visibilitySpec": {
+                        "repeat": false,
+                        "visiblePercentage": 0.5
+                    }
+                }
+            }
+        }
+    </script>
+</msc-ga>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.lalacube.com/mei/webComponent_msc-collages.html"
+    },
+    "headline": "Web Component: <msc-collages /> - web components based images effect",
+    "image": [
+        "https://blog.lalacube.com/mei/img/preview/msc-collages.png"
+    ],
+    "datePublished": "2021-09-16T23:30:00+0800",
+    "dateModified": "2021-09-16T23:30:00+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Paul Li",
+        "jobTitle": "Front End engineer",
+        "affiliation": "mei's studio",
+        "additionalName": "mei",
+        "url": "https://www.facebook.com/mei.studio.li",
+        "image": "https://graph.facebook.com/mei.studio.li/picture",
+        "brand": "mei's studio",
+        "familyName": "Li",
+        "gender": "M",
+        "givenName": "Paul",
+        "owns": "mei's studio",
+        "worksFor": "Yahoo",
+        "description": "People who loves all front end skills"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "mei's studio",
+        "url": "https://blog.lalacube.com/mei/webComponent_msc-collages.html",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://graph.facebook.com/mei.studio.li/picture"
+        },
+        "sameAs": [
+            "https://www.facebook.com/mei.studio.li/"
+        ]
+    },
+    "description": "People love collages. With collages we could combined several images together and make them more vivid and interesting. Developers could apply <msc-collages /> instead of annoying HTML code & CSS setting. All we need to do is just make a few setting and everything will be all set. That's take a look what can <msc-collages /> do ? Here comes some <msc-collages /> with different theme."
+}
+</script>
+
+<script>
+customElements.whenDefined('msc-collages').then(() => {
+  const handler = (evt) => {
+    const {
+      detail: {
+        alt,
+        baseEvent,
+        link,
+        src,
+        target
+      }
+    } = evt;
+
+    console.log(evt.detail);
+  };
+
+  Array.from(document.querySelectorAll('msc-collages')).forEach(
+    (collages) => {
+      collages.addEventListener('msc-collages-click', handler);
+    }
+  );
+});
+</script>
+
+
+<!-- <script type="module">
+import { _wcl } from './mjs/common-lib.js';
+
+_wcl.whenDefined('document.body', 'YT.Player').then(
+  () => {
+    console.log('here', YT);
+  }
+);
+
+_wcl.loadScript('https://www.youtube.com/iframe_api');
+</script>
+ -->
+
+</body>
+</html>
